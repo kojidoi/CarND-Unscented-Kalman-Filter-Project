@@ -67,6 +67,15 @@ public:
   ///* Sigma point spreading parameter
   double lambda_;
 
+  ///* Number of sigma points
+  int n_sig_;
+
+  ///* Laser measurement noise covariance matrix
+  MatrixXd R_laser_;
+
+  ///* Radar measurement noise covariance matrix
+  MatrixXd R_radar_;
+
 
   /**
    * Constructor
@@ -102,6 +111,16 @@ public:
    * @param meas_package The measurement at k+1
    */
   void UpdateRadar(MeasurementPackage meas_package);
+
+  /**
+   * Common process of Update Lidar and Radar
+   */
+  void UpdateCommon(MeasurementPackage meas_package, int n_z, MatrixXd Zsig, MatrixXd R);
+
+  /**
+   * Normalize angle value to [-Pi, Pi]
+   */
+  static void NormalizeAngle(double &angle);
 };
 
 #endif /* UKF_H */
